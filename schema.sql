@@ -9,6 +9,7 @@ first_name VARCHAR(30)  UNIQUE NOT NULL,
 last_name VARCHAR(30) UNIQUE NOT NULL,
 role_id INT NULL,
 manager_id INT,
+PRIMARAY KEY (id)
 FOREIGN KEY (role_id) REFERENCES role(id),
 FOREIGN KEY (manager_id) REFERENCES manager(id),
 
@@ -19,6 +20,7 @@ id INT AUTO_INCREMENT PRIMARY KEY,
 title VARCHAR(30),
 salary DECIMAL(6,2),
 department_id INT NOT NULL,
+PRIMARAY KEY (id)
 FOREIGN KEY (department_id) REFERENCES department(id),
 );
 
