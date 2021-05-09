@@ -1,6 +1,6 @@
 const mysql = require("mysql");
 const inquirer = require("inquirer");
-
+require("console.table");
 const connection = mysql.createConnection({
   host: "localhost",
 
@@ -11,77 +11,142 @@ const connection = mysql.createConnection({
   database: "employee_tracker_db",
 });
 
-const mainMenu = () => {
-  inquirer
-    .prompt({
-      name: "input",
-      type: "list",
-      message: "What would you like to do?",
-      choices: [
-        "View all departments",
-        "View all roles",
-        "View all employees",
-        "Add a department",
-        "Add a role",
-        "Add an employee",
-        "Update employee role",
-        "Exit",
-      ],
-    })
+const Employee = () => {
+  inquirer.prompt({
+    name: "input",
+    type: "list",
+    message: "What would you like to do?",
+    choices: [
+      "View all departments",
+      "View all roles",
+      "View all employees",
+      "Add a department",
+      "Add a role",
+      "Add an employee",
+      "Update employee role",
+      "Exit",
+    ],
+  })
+  .then (function (question){
+    console.log(question)
+  switch (question.input) {
+    case "View all employees":
+      employeeSearch();
+      break;
 
-    .then((answer) => {
-      switch (answer.action) {
-        case "View all Employees":
-          employeeSearch();
-          break;
+    case "View all departments":
+      departmentSearch();
+      break;
 
-        case "View all Employees by Department":
-          departmentSearch();
-          break;
+    case "View all roles":
+      roleSearch();
+      break;
 
-        case "View all Employees by Role":
-          roleSearch();
-          break;
+    case "View all Employees by Manager":
+      managerSearch();
+      break;
 
-        case "View all Employees by Manager":
-          managerSearch();
-          break;
+    case "Add Employee":
+      addEmployee();
+      break;
 
-        case "Add Employee":
-          addEmployee();
-          break;
+    case "Add a department":
+      addDepartment();
+      break;
 
-        case "Add Department":
-          addDepartment();
-          break;
+    case "Add Role":
+      addRole();
+      break;
 
-        case "Add Role":
-          addRole();
-          break;
+    case "Update Employee":
+      updateEmployee();
+      break;
 
-        case "Update Employee":
-          updateEmployee();
-          break;
+    case "Remove Employee":
+      removeEmployee();
+      break;
 
-        case "Remove Employee":
-          removeEmployee();
-          break;
+    default:
+      connection.end();
+      console.log(`abort mission`);
+      break;
+  }
+  })};
 
-        case "Exit":
-          connection.end();
-          break;
-        default:
-          console.log(`abort mission: ${answer.action}`);
-          break;
-      }
-    });
+  /*need to add joins*/
+const employeeSearch = () => {
+  connection.query(
+    "SELECT * FROM  employee",
+    (err, searched) => {
+      if (err) throw err;
+      console.table(searched);
+      Employee();
+    }
+  );
 };
 
-const employeeSearch = () => {
-  connection.query('SELECT employee.id, employee.first_name, employee.last_name, role.title,role.salary,department.department,manager_id FROM employee JOIN role ON employee.role_id=role.id JOIN department on department.id = role.department_id',
-      (err, searched) => {
-          if (err) throw err;
-          console.table(searched)
-          start();
-      });
-    };
+const departmentSearch = () => {
+  connection.query(
+    "SELECT * FROM  department",
+    (err, searched) => {
+      if (err) throw err;
+      console.table(searched);
+      Employee();
+    }
+  );
+};
+
+const roleSearch = () => {
+  connection.query(
+    "SELECT * FROM  role",
+    (err, searched) => {
+      if (err) throw err;
+      console.table(searched);
+      Employee();
+    }
+  );
+};
+
+const managerSearch = () => {
+  connection.query(
+    "SELECT * FROM  manager",
+    (err, searched) => {
+      if (err) throw err;
+      console.table(searched);
+      Employee();
+    }
+  );
+};
+
+const addEmployee = () => {
+  connection.query(
+    "INSERT INTO employee SET?",
+    (err, searched) => {
+      if (err) throw err;
+      console.table(searched);
+      Employee();
+    }
+  );
+};
+
+
+const addDepartment = () => {
+  inquirer.prompt({
+    name: "name",
+    type: "input",
+    message: "What do you want to name your department?",
+  }).then (function(question){
+  connection.query(
+    "INSERT INTO department SET ?",{
+    name: question.name
+    },
+    (err, searched) => {
+      if (err) throw err;
+      console.table(searched);
+      Employee();
+    }
+  )});
+}
+
+
+Employee()
