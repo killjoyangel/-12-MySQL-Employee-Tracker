@@ -12,7 +12,6 @@ manager_id INT,
 PRIMARAY KEY (id)
 FOREIGN KEY (role_id) REFERENCES role(id),
 FOREIGN KEY (manager_id) REFERENCES manager(id),
-
 );
 
 CREATE TABLE role (
@@ -28,3 +27,4 @@ CREATE TABLE department (
 id INT AUTO_INCRIMENT PRIMARY KEY,
 name VARCHAR(30) UNIQUE NOT NULL
 );
+

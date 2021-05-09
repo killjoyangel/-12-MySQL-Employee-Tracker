@@ -7,29 +7,25 @@ const connection = mysql.createConnection({
  port: 3306,
 
   user: 'root',
-  password:FFDP#1983,
+  password:'FFDP#1983',
   database: 'employee_tracker_db',
 });
-
-connection.connect((err) => {
-  if (err) throw err;
-  runSearch();
-});
-
-/* last week's project example
 
 const runSearch = () => {
   inquirer
     .prompt({
       name: 'action',
-      type: 'rawlist',
+      type: 'list',
       message: 'What would you like to do?',
       choices: [
-        'Find songs by artist',
-        'Find all artists who appear more than once',
-        'Find data within a specific range',
-        'Search for a specific song',
-        'Find artists with a top song and top album in the same year',
+        "View all departments",
+        "View all roles",
+        "View all employees",
+        "Add a department",
+        "Add a role",
+        "Add an employee",
+        "Update employee role",
+        "Exit"
       ],
     })
     .then((answer) => {
@@ -183,4 +179,7 @@ const songAndAlbumSearch = () => {
         runSearch();
       });
     });
-};*/
+};
+
+/*you are missing the server listen at the bottom
+though and all the server configuration code. I would look at the the express material for guidance on that part*/
