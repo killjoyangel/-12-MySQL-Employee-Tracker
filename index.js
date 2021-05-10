@@ -47,7 +47,7 @@ const Employee = () => {
       managerSearch();
       break;
 
-    case "Add Employee":
+    case "Add an employee":
       addEmployee();
       break;
 
@@ -55,11 +55,11 @@ const Employee = () => {
       addDepartment();
       break;
 
-    case "Add Role":
+    case "Add a role":
       addRole();
       break;
 
-    case "Update Employee":
+    case "Update employee role":
       updateEmployee();
       break;
 
@@ -134,16 +134,17 @@ const addEmployee = () => {
     {
       name: "title",
       type: "input",
-      message: "What is your employees role?"
+      message: "What is your employees role id?"
     },
   ]).then((res) => {
     connection.query("INSERT INTO employee SET ?",{
       first_name: res.first,
       last_name: res.last,
       role_id: res.title
-      },(err) => {if (err) throw err;}
-    );
-    Employee()
+      },(err) => {if (err) throw err;
+        Employee()
+      });
+
   })};
 
 
@@ -165,4 +166,56 @@ const addDepartment = () => {
       Employee()
    })};
 
-Employee()
+
+
+
+   const addRole= () => {
+   inquirer.prompt({
+    name: "input",
+    type: "list",
+    message: "Pick a role?",
+    choices: [
+      "boss",
+      "Lawyer",
+      "Salesdude",
+      "Techie",
+    ],
+  })
+  .then (function(question){
+    connection.query(
+      "INSERT INTO role SET ?",{
+      name: question.name
+      },
+     /* (err, searched) => {
+        if (err) throw err;
+        console.table(searched);*/
+    )
+        Employee()
+     })};
+
+
+
+     const updateEmployee =() =>{
+      inquirer.prompt([
+          {
+              name: 'employeeId',
+              type: 'input',
+              message: 'What  Employee would you like to update, Enter the Employees ID?'
+          },
+          {
+              name: 'newRole',
+              type: 'input',
+              message: 'What is the new Role you would you like to give this Employee, Enter the new Role ID?'
+          }
+      ]).then((res) => {
+          console.log ("updating employee role")
+          connection.query(
+              `UPDATE employee SET role_id = ${res.newRole} WHERE id =${res.employeeId}`,
+              (err) => {
+                  if (err) throw err
+                Employee();
+              })
+      })};
+
+  
+Employee();
