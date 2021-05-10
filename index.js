@@ -75,8 +75,8 @@ const Employee = () => {
 
   /*need to add joins*/
 const employeeSearch = () => {
-  connection.query(
-    "SELECT * FROM  employee",
+ /* connection.query('SELECT.from emp employee.id, employee.first_name, employee.last_name, employee. role.id, manager_id, role.title, role.salary, role.department_id,department.department, FROM employee JOIN role ON employee.role_id=role.id JOIN department on department.id = role.department_id',*/
+  connection.query("SELECT * FROM  employee",
     (err, searched) => {
       if (err) throw err;
       console.table(searched);
@@ -86,8 +86,7 @@ const employeeSearch = () => {
 };
 
 const departmentSearch = () => {
-  connection.query(
-    "SELECT * FROM  department",
+  connection.query("SELECT * FROM  department",
     (err, searched) => {
       if (err) throw err;
       console.table(searched);
@@ -97,8 +96,7 @@ const departmentSearch = () => {
 };
 
 const roleSearch = () => {
-  connection.query(
-    "SELECT * FROM  role",
+  connection.query("SELECT * FROM  role",
     (err, searched) => {
       if (err) throw err;
       console.table(searched);
@@ -119,15 +117,34 @@ const managerSearch = () => {
 };
 
 const addEmployee = () => {
-  connection.query(
-    "INSERT INTO employee SET?",
-    (err, searched) => {
-      if (err) throw err;
-      console.table(searched);
-      Employee();
-    }
+  inquirer.prompt([{
+    name: "first",
+    type: "input",
+    message: "What is your employees first name?"
+  },
+    {
+      name: "last",
+      type: "input",
+      message: "What is your employees last name?"
+    },
+    {
+      name: "title",
+      type: "input",
+      message: "What is your employees role?"
+    },
+  ]).then((res) => {
+    connection.query = "INSERT INTO employee SET ?",{
+  first_name: res.first,
+  last_name: res.last,
+  role_id: res.title
+  },
+    (err) => {if (err) throw err;
+    };
+  Employee();
+  }
   );
-};
+  }
+
 
 
 const addDepartment = () => {
@@ -140,13 +157,11 @@ const addDepartment = () => {
     "INSERT INTO department SET ?",{
     name: question.name
     },
-    (err, searched) => {
+   /* (err, searched) => {
       if (err) throw err;
-      console.table(searched);
-      Employee();
-    }
-  )});
-}
-
+      console.table(searched);*/
+  )
+      Employee()
+   })};
 
 Employee()
