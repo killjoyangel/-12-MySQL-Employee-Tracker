@@ -1,6 +1,7 @@
 const mysql = require("mysql");
 const inquirer = require("inquirer");
 require("console.table");
+
 const connection = mysql.createConnection({
   host: "localhost",
 
@@ -116,6 +117,9 @@ const managerSearch = () => {
   );
 };
 
+
+
+
 const addEmployee = () => {
   inquirer.prompt([{
     name: "first",
@@ -133,17 +137,14 @@ const addEmployee = () => {
       message: "What is your employees role?"
     },
   ]).then((res) => {
-    connection.query = "INSERT INTO employee SET ?",{
-  first_name: res.first,
-  last_name: res.last,
-  role_id: res.title
-  },
-    (err) => {if (err) throw err;
-    };
-  Employee();
-  }
-  );
-  }
+    connection.query("INSERT INTO employee SET ?",{
+      first_name: res.first,
+      last_name: res.last,
+      role_id: res.title
+      },(err) => {if (err) throw err;}
+    );
+    Employee()
+  })};
 
 
 
