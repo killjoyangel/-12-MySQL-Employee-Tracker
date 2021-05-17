@@ -123,11 +123,7 @@ const addEmployee = () => {
         type: "input",
         message: "What is your employees last name?",
       },
-      {
-        name: "title",
-        type: "input",
-        message: "What is your employees role id?",
-      },
+      
     ])
     .then((res) => {
       connection.query(
@@ -142,8 +138,6 @@ const addEmployee = () => {
           Employee();
         }
       );
-    });
-};
 
 const addDepartment = () => {
   inquirer
@@ -179,14 +173,16 @@ const addRole = () => {
         "INSERT INTO role SET ?",
         {
           name: question.name,
+        },
+        (err, searched) => {
+          if (err) throw err;
+          console.table(searched);
+          Employee()
         }
-        /* (err, searched) => {
-        if (err) throw err;
-        console.table(searched);*/
       );
-      Employee();
     });
 };
+
 
 const updateEmployee = () => {
   inquirer
