@@ -1,6 +1,6 @@
 const mysql = require("mysql");
 const inquirer = require("inquirer");
-require("console.table");
+require('console.table');
 
 const connection = mysql.createConnection({
   host: "localhost",
@@ -8,7 +8,7 @@ const connection = mysql.createConnection({
   port: 3306,
 
   user: "root",
-  password: "FFDP#1983",
+  password: "",
   database: "employee_tracker_db",
 });
 
@@ -32,11 +32,7 @@ const Employee = () => {
     .then(function (question) {
       console.log(question);
       switch (question.input) {
-        case "Add an employee":
-          addEmployee();
-          break;
-
-        case "Add a department":
+      case "Add a department":
           addDepartment();
           break;
 
@@ -44,10 +40,10 @@ const Employee = () => {
           addRole();
           break;
 
-        case "View all employees":
-          employeeSearch();
-          break;
-
+          case "Add an employee":
+            addEmployee();
+            break;
+    
         case "View all departments":
           departmentSearch();
           break;
@@ -56,9 +52,9 @@ const Employee = () => {
           roleSearch();
           break;
 
-        case "View all Employees by Manager":
-          managerSearch();
-          break;
+          case "View all employees":
+            employeeSearch();
+            break;
 
         case "Update employee role":
           updateEmployee();
@@ -102,14 +98,6 @@ const roleSearch = () => {
   });
 };
 
-const managerSearch = () => {
-  connection.query("SELECT * FROM  manager", (err, searched) => {
-    if (err) throw err;
-    console.table(searched);
-    Employee();
-  });
-};
-
 const addEmployee = () => {
   inquirer
     .prompt([
@@ -123,7 +111,6 @@ const addEmployee = () => {
         type: "input",
         message: "What is your employees last name?",
       },
-      
     ])
     .then((res) => {
       connection.query(
@@ -138,6 +125,9 @@ const addEmployee = () => {
           Employee();
         }
       );
+    })
+}
+
 
 const addDepartment = () => {
   inquirer
@@ -169,17 +159,17 @@ const addRole = () => {
       choices: ["boss", "Lawyer", "Salesdude", "Techie"],
     })
     .then(function (question) {
-      connection.query(
+     // connection.query(
         "INSERT INTO role SET ?",
         {
-          name: question.name,
+          addRole: question.addRole,
         },
         (err, searched) => {
           if (err) throw err;
           console.table(searched);
           Employee()
         }
-      );
+     // );//
     });
 };
 
@@ -202,14 +192,14 @@ const updateEmployee = () => {
     ])
     .then((res) => {
       console.log("updating employee role");
-      connection.query(
-        `UPDATE employee SET role_id = ${res.newRole} WHERE id =${res.employeeId}`,
-        (err) => {
-          if (err) throw err;
+    //  connection.query(
+        `UPDATE employee SET role_id = ${res.newRole} WHERE id =${res.employeeId}`;
+       /* (err) => {
+          if (err) throw err;*/
           Employee();
         }
       );
-    });
-};
+    };
+
 
 Employee();
