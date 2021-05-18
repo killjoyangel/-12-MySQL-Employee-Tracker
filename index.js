@@ -151,36 +151,31 @@ const addDepartment = () => {
 };
 
 const addRole = () => {
-   inquirer
-     .prompt({
-       name: "input",
-       type: "list",
-       message: "Pick a role?",
-       choices: ["boss", "Lawyer", "Salesdude", "Techie"],
+  inquirer
+    .prompt([{
+      name: "role",
+      type: "list",
+      message: "Pick a role?",
+      choices: ["boss", "Lawyer", "Salesdude", "Techie"],
+},{
+      name: "salary",
+      type: "list",
+      message: "salary",
+      choices: [ 6000.00, 8600.00,, 5860.00, 86000.00],
+},{
+      name: "id",
+      type: "list",
+      message: "department_id",
+      choices: [1, 3, 2, 4],
+    }])
+    .then(function (question) {
+     connection.query("INSERT INTO role SET ?",{title:question.role, salary:question.salary, despartment_id: question.id},(err, searched) => {
 
-       name: "input",
-       type: "list",
-       message: "salary",
-       choices: [ 6000.00, 8600.00,, 5860.00, 86000.00],
-
-
-       name: "input",
-       type: "list",
-       message: "department_id",
-       choices: [1, 3, 2, 4],
-
-
-
-
-     })
-     .then(function (question) {
-      /* connection.query("INSERT INTO role SET ?",{question.addRole},(err, searched) => {
-         console.log('hello'); 
-         if (err) throw err;
-         console.table(searched);
-         Employee() */
- console.log(question)
-       })};
+        console.log('hello'); 
+        if (err) throw err;
+        console.table(searched);
+        Employee() 
+      })})};
 
 const updateEmployee = () => {
   inquirer
