@@ -3,7 +3,7 @@
 Our task was to build a command line appe. That offered a solution for managing a company's employees. We were to create a  database schema containing three tables: Department, Role, Employee
 
 I created a demo that you can view on this link:
- [Employee Tracker](https://drive.google.com/file/d/1BLbe6w9UIov3UzG22q1rq4g9ZKorqRxf/view?usp=sharing/)
+ [Employee Tracker](https://drive.google.com/file/d/1dgPth9zk1ughTf0ftX4o3bnSW4P3Jd19/view)
 
 <br>
 <br>
@@ -31,18 +31,25 @@ node index.js
 <br>
 <br>
 
-### Screenshot of schema
+### Screenshot of terminal
 ![screenshot](assets/images/terminal.JPG)
 
+<br>
+<br>
+
+### Screenshot of schema
+![screenshot](assets/images/schema.JPG)
+
+<br>
+<br>
+
 ### Screenshot of seeds
-![screenshot](assets/images/terminal.JPG)
+![screenshot](assets/images/seeds.JPG)
 
 
 ### Demo of app
-![Demo Gif](assets/images/README.gif)
+![Demo Gif](assets/images/employeetracker.gif)
 
-<br>
-<br>
 <br>
 <br>
 
