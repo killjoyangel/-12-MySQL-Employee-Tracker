@@ -169,9 +169,13 @@ const addRole = () => {
       choices: [1, 3, 2, 4],
     }])
     .then(function (question) {
-     connection.query("INSERT INTO role SET ?",{title:question.role, salary:question.salary, department_id: question.id},(err, searched) => {
+     connection.query("INSERT INTO role SET ?",{
+       title:question.role,
+       salary:question.salary,
+       department_id: question.id
+      }, (err) => {
         if (err) throw err;
-        console.table(searched);
+        console.log("Role was successfully inserted into the database!");
         Employee() 
       })})};
 
